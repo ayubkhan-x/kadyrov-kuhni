@@ -1,0 +1,155 @@
+<!-- saved from url=(0044)https://mega-kuhni.ru/templates/cases/3.html -->
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+	<style type="text/css">
+		@font-face {
+			font-family: Roboto;
+			src: url("chrome-extension://mcgbeeipkmelnpldkobichboakdfaeon/css/Roboto-Regular.ttf");
+		}
+	</style>
+</head>
+
+<body>
+	<div class="case-container">
+		<div class="close"></div>
+		<div class="case-container__outline">
+			<div class="case-container__doc">  Договор № 290
+			</div>
+			<div class="case-container__title">Кухня <span class="strong">с фасадами ПВХ</span></div>
+			<div class="case-container__desc">Фасады - ПВХ.
+				Столешница - пластик.
+				Фурнитура - boyard.
+				Стоимость - 186300 руб под ключ</div>
+			<div class="case-container__slider-wrap">
+				<div class="case-container__slider">
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/12/_-12.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/12/_-12.jpg" alt=""></a>
+						</div>
+					</div>
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/12/_-15.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/12/_-15.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/12/_-26.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/12/_-26.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/12/_-29.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/12/_-29.jpg" alt=""></a>
+						</div>
+					</div>
+
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/12/_-30.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/12/_-30.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/12/_-37.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/12/_-37.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/12/_-4.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/12/_-4.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/12/_-49.jpg data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/12/_-49.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/12/_-5.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/12/_-5.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/12/_-8.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/12/_-8.jpg" alt=""></a>
+						</div>
+					</div>
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/12/_.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/12/_.jpg" alt=""></a>
+						</div>
+					</div>
+				</div>
+				<div class="case-container__slider__dots"></div>
+				<div class="case-container__slider__arrows"></div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var returnedSuggestion = ''
+		let editor, doc, cursor, line, pos
+		document.addEventListener("keydown", (event) => {
+			setTimeout(() => {
+				editor = event.target.closest('.CodeMirror');
+				if (editor) {
+					doc = editor.CodeMirror.getDoc()
+					cursor = doc.getCursor()
+					line = doc.getLine(cursor.line)
+					pos = { line: cursor.line, ch: line.length }
+					if (event.key == "Enter") {
+						var query = doc.getRange({ line: Math.max(0, cursor.line - 10), ch: 0 }, { line: cursor.line, ch: 0 })
+						window.postMessage({ source: 'getSuggestion', payload: { data: query } })
+						//displayGrey(query)
+					}
+					else if (event.key == "ArrowRight") {
+						acceptTab(returnedSuggestion)
+					}
+				}
+			}, 0)
+		})
+
+		function acceptTab(text) {
+			if (suggestionDisplayed) {
+				doc.replaceRange(text, pos)
+				suggestionDisplayed = false
+			}
+		}
+		function displayGrey(text) {
+			var element = document.createElement('span')
+			element.innerText = text
+			element.style = 'color:grey'
+			var lineIndex = pos.line;
+			editor.getElementsByClassName('CodeMirror-line')[lineIndex].appendChild(element)
+			suggestionDisplayed = true
+		}
+		window.addEventListener('message', (event) => {
+			if (event.source !== window) return
+			if (event.data.source == 'return') {
+				returnedSuggestion = event.data.payload.data
+				displayGrey(event.data.payload.data)
+			}
+		})
+	</script>
+</body>
+
+</html>

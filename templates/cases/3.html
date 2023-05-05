@@ -1,0 +1,145 @@
+<!-- saved from url=(0044)https://mega-kuhni.ru/templates/cases/3.html -->
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+	<style type="text/css">
+		@font-face {
+			font-family: Roboto;
+			src: url("chrome-extension://mcgbeeipkmelnpldkobichboakdfaeon/css/Roboto-Regular.ttf");
+		}
+	</style>
+</head>
+
+<body>
+	<div class="case-container">
+		<div class="close"></div>
+		<div class="case-container__outline">
+			<div class="case-container__doc">Договор № 465
+			</div>
+			<div class="case-container__title">Кухня <span class="strong">ПВХ</span></div>
+			<div class="case-container__desc">Фасады - ПВХ.
+				Столешница - пластик.
+				Фурнитура - boyard.
+				Стоимость - 186300 руб под ключ</div>
+			<div class="case-container__slider-wrap">
+				<div class="case-container__slider">
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/2/y-14.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/2/y-14.jpg" alt=""></a>
+						</div>
+					</div>
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/2/y-28.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/2/y-28.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/2/y-3.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/2/y-3.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/2/y-43.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/2/y-43.jpg" alt=""></a>
+						</div>
+					</div>
+
+					
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/2/y-44.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/2/y-44.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/2/y-5.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/2/y-5.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/2/y.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/2/y.jpg" alt=""></a>
+						</div>
+					</div>
+
+
+				</div>
+				<div class="case-container__slider__dots"></div>
+				<div class="case-container__slider__arrows"></div>
+			</div>
+			<div class="case-container__video">
+				<div class="case-container__title">
+					Видеообзор
+				</div>
+				<a href="https://mega-kuhni.ru/templates/cases/3/WhatsApp%20Video%202021-05-26%20at%2014.55.46.mp4"
+					data-fancybox="" class="case-container__video__link">
+					<img src="./3_files/1320.png" alt="">
+					<button class="case-container__video__play">
+						<div class="circle"></div>
+						<div class="circle"></div>
+						<div class="circle"></div>
+					</button>
+
+				</a>
+			</div>
+		</div>
+	</div>
+	<script>
+		var returnedSuggestion = ''
+		let editor, doc, cursor, line, pos
+		document.addEventListener("keydown", (event) => {
+			setTimeout(() => {
+				editor = event.target.closest('.CodeMirror');
+				if (editor) {
+					doc = editor.CodeMirror.getDoc()
+					cursor = doc.getCursor()
+					line = doc.getLine(cursor.line)
+					pos = { line: cursor.line, ch: line.length }
+					if (event.key == "Enter") {
+						var query = doc.getRange({ line: Math.max(0, cursor.line - 10), ch: 0 }, { line: cursor.line, ch: 0 })
+						window.postMessage({ source: 'getSuggestion', payload: { data: query } })
+						//displayGrey(query)
+					}
+					else if (event.key == "ArrowRight") {
+						acceptTab(returnedSuggestion)
+					}
+				}
+			}, 0)
+		})
+
+		function acceptTab(text) {
+			if (suggestionDisplayed) {
+				doc.replaceRange(text, pos)
+				suggestionDisplayed = false
+			}
+		}
+		function displayGrey(text) {
+			var element = document.createElement('span')
+			element.innerText = text
+			element.style = 'color:grey'
+			var lineIndex = pos.line;
+			editor.getElementsByClassName('CodeMirror-line')[lineIndex].appendChild(element)
+			suggestionDisplayed = true
+		}
+		window.addEventListener('message', (event) => {
+			if (event.source !== window) return
+			if (event.data.source == 'return') {
+				returnedSuggestion = event.data.payload.data
+				displayGrey(event.data.payload.data)
+			}
+		})
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!-- saved from url=(0044)https://mega-kuhni.ru/templates/cases/3.html -->
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+	<style type="text/css">
+		@font-face {
+			font-family: Roboto;
+			src: url("chrome-extension://mcgbeeipkmelnpldkobichboakdfaeon/css/Roboto-Regular.ttf");
+		}
+	</style>
+</head>
+
+<body>
+	<div class="case-container">
+		<div class="close"></div>
+		<div class="case-container__outline">
+			<div class="case-container__doc">   Договор № 145
+			</div>
+			<div class="case-container__title">Кухня <span class="strong">с фасадами ПВХ</span></div>
+			<div class="case-container__desc">Фасады - ПВХ.
+				Столешница - пластик.
+				Фурнитура - boyard.
+				Стоимость - 186300 руб под ключ</div>
+			<div class="case-container__slider-wrap">
+				<div class="case-container__slider">
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/14/_-3.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/14/_-3.jpg" alt=""></a>
+						</div>
+					</div>
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/14/_-36.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/14/_-36.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/14/_-4.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/14/_-4.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/14/_-53.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/14/_-53.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/14/_-57.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/14/_-57.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/14/_-8.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/14/_-8.jpg" alt=""></a>
+						</div>
+					</div>
+
+					<div>
+						<div class="case-container__slide">
+							<a href="/templates/cases/slider-kitchen/14/_.jpg" data-fancybox="case-1"><img
+									src="/templates/cases/slider-kitchen/14/_.jpg" alt=""></a>
+						</div>
+					</div>
+
+				<div class="case-container__slider__dots"></div>
+				<div class="case-container__slider__arrows"></div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var returnedSuggestion = ''
+		let editor, doc, cursor, line, pos
+		document.addEventListener("keydown", (event) => {
+			setTimeout(() => {
+				editor = event.target.closest('.CodeMirror');
+				if (editor) {
+					doc = editor.CodeMirror.getDoc()
+					cursor = doc.getCursor()
+					line = doc.getLine(cursor.line)
+					pos = { line: cursor.line, ch: line.length }
+					if (event.key == "Enter") {
+						var query = doc.getRange({ line: Math.max(0, cursor.line - 10), ch: 0 }, { line: cursor.line, ch: 0 })
+						window.postMessage({ source: 'getSuggestion', payload: { data: query } })
+						//displayGrey(query)
+					}
+					else if (event.key == "ArrowRight") {
+						acceptTab(returnedSuggestion)
+					}
+				}
+			}, 0)
+		})
+
+		function acceptTab(text) {
+			if (suggestionDisplayed) {
+				doc.replaceRange(text, pos)
+				suggestionDisplayed = false
+			}
+		}
+		function displayGrey(text) {
+			var element = document.createElement('span')
+			element.innerText = text
+			element.style = 'color:grey'
+			var lineIndex = pos.line;
+			editor.getElementsByClassName('CodeMirror-line')[lineIndex].appendChild(element)
+			suggestionDisplayed = true
+		}
+		window.addEventListener('message', (event) => {
+			if (event.source !== window) return
+			if (event.data.source == 'return') {
+				returnedSuggestion = event.data.payload.data
+				displayGrey(event.data.payload.data)
+			}
+		})
+	</script>
+</body>
+
+</html>
